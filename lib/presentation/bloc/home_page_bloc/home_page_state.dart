@@ -19,3 +19,6 @@ final class HomePageLoadedState extends HomePageState {
 final class HomePageErroeState extends HomePageState{
 
 }
+final class HomePermissionDeniedState extends HomePageState{
+
+}

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_weather/controllers/dialogs/mannual_permission.dart';
 import 'package:my_weather/presentation/bloc/home_page_bloc/home_page_bloc.dart';
-import 'package:my_weather/presentation/dialogs/error_dialog.dart';
+import 'package:my_weather/controllers/dialogs/error_dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,11 +25,15 @@ class _HomePageState extends State<HomePage> {
     return BlocConsumer<HomePageBloc, HomePageState>(
       bloc: homePageBloc,
       listener: (context, state) {
-        if (state is HomePageLoadedState) ErrorDialog.show(context);
-        if (state is HomePageLoadedState) print(state.todaysList.temperatureList);
-        
+        if (state is HomePageErroeState) ErrorDialog.show(context);
+        if (state is HomePermissionDeniedState) {
+          LocationSettingDialog(homePageBloc: homePageBloc).show(context);
+        }
       },
       builder: (context, state) {
+        if (state is HomePageLoadedState) {
+          print(state.currentWeather.feelsLikeC);
+        }
         return Scaffold(
           extendBodyBehindAppBar: true,
           body: CustomScrollView(
