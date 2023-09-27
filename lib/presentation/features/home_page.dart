@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:my_weather/controllers/dialogs/mannual_permission.dart';
 import 'package:my_weather/presentation/bloc/home_page_bloc/home_page_bloc.dart';
 import 'package:my_weather/controllers/dialogs/error_dialog.dart';
+
+import '../../controllers/constants.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,8 +28,13 @@ class _HomePageState extends State<HomePage> {
     return BlocConsumer<HomePageBloc, HomePageState>(
       bloc: homePageBloc,
       listener: (context, state) {
+        if (state is HomePageLoadedState) {
+          print('Loaded');
+        }
         if (state is HomePageErroeState) ErrorDialog.show(context);
-        if (state is HomePermissionDeniedState) {
+        if (state is HomePermissionDeniedState && !called) {
+          print('Denied');
+          called = true;
           LocationSettingDialog(homePageBloc: homePageBloc).show(context);
         }
       },

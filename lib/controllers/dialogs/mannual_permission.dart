@@ -7,7 +7,7 @@ import 'package:my_weather/presentation/bloc/home_page_bloc/home_page_bloc.dart'
 class LocationSettingDialog {
   final HomePageBloc homePageBloc;
   LocationSettingDialog({required this.homePageBloc});
-   void show(BuildContext context) {
+  void show(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -18,14 +18,20 @@ class LocationSettingDialog {
             child: const Center(
               child: Column(
                 children: [
-                  Spacer(),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(),
+                  ),
                   Text(
                     'Oops!',
                     style: TextStyle(fontSize: 60),
                   ),
                   Text("Allow loaction permission manually",
                       style: TextStyle(fontSize: 25)),
-                  Spacer()
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(),
+                  ),
                 ],
               ),
             ),
@@ -37,7 +43,10 @@ class LocationSettingDialog {
               onPressed: () => Navigator.pop(context),
               child: const Text('Cancel')),
           ElevatedButton(
-              onPressed: () => LocationSetting(homePageBloc: homePageBloc).goToSettings(),
+              onPressed: () {
+                LocationSetting(homePageBloc: homePageBloc).goToSettings();
+                Navigator.pop(context);
+              },
               child: const Text("Open App Settings"))
         ],
       ),

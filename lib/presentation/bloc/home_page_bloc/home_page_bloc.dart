@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:http/http.dart';
 import 'package:my_weather/controllers/dialogs/mannual_permission.dart';
 import 'package:my_weather/model/current_model.dart';
 import 'package:my_weather/model/model_list_today_hourly_forecast.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 part 'home_page_event.dart';
 part 'home_page_state.dart';
@@ -21,26 +23,27 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   FutureOr<void> _initailEvent(
       InitHomeEvent event, Emitter<HomePageState> emit) async {
     Future<Position> determinePosition() async {
-      bool serviceEnabled;
-      LocationPermission permission;
-      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      await Permission.location.isGranted.then((value) {
+        print(value);
+      });
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         return Future.error('Location services are disabled.');
       }
-
-      permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
+      if (await Geolocator.checkPermission() ==
+          LocationPermission.deniedForever) {
+        add(HomePermissionDeniedEvent());
+        return Future.error('');
+      }
+      if (await Geolocator.checkPermission() == LocationPermission.denied) {
+        await Geolocator.requestPermission().then((value) {
+          print(value);
+        });
+        if (await Geolocator.checkPermission() == LocationPermission.denied) {
           return Future.error('Location permissions are denied');
         }
       }
 
-      if (permission == LocationPermission.deniedForever) {
-        add(HomePermissionDeniedEvent());
-        return Future.error(
-            'Location permissions are permanently denied, we cannot request permissions.');
-      }
       return await Geolocator.getCurrentPosition();
     }
 
