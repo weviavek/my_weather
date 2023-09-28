@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:my_weather/controllers/dialogs/mannual_permission.dart';
 import 'package:my_weather/presentation/bloc/home_page_bloc/home_page_bloc.dart';
 import 'package:my_weather/controllers/dialogs/error_dialog.dart';
-
-import '../../controllers/constants.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,10 +13,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final HomePageBloc homePageBloc = HomePageBloc();
+  bool isShowing = false;
   @override
   void initState() {
     homePageBloc.add(InitHomeEvent());
-
     super.initState();
   }
 
@@ -27,21 +24,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocConsumer<HomePageBloc, HomePageState>(
       bloc: homePageBloc,
-      listener: (context, state) {
+      listener: (contexts, state) {
+        print(state.runtimeType);
         if (state is HomePageLoadedState) {
-          print('Loaded');
+          print(state.todaysList.temperatureList);
         }
+        ;
         if (state is HomePageErroeState) ErrorDialog.show(context);
-        if (state is HomePermissionDeniedState && !called) {
-          print('Denied');
-          called = true;
+        if (state is HomePermissionDeniedState) {
+          isShowing = true;
           LocationSettingDialog(homePageBloc: homePageBloc).show(context);
         }
       },
       builder: (context, state) {
-        if (state is HomePageLoadedState) {
-          print(state.currentWeather.feelsLikeC);
-        }
         return Scaffold(
           extendBodyBehindAppBar: true,
           body: CustomScrollView(

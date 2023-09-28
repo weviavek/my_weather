@@ -7,4 +7,3 @@ final class InitHomeEvent extends HomePageEvent {
 }
 
 final class LoadedHomePageEvent extends HomePageEvent {}
-final class HomePermissionDeniedEvent extends HomePageEvent{}

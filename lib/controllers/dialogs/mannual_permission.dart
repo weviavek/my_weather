@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:my_weather/controllers/funtions/setting_function.dart';
 import 'package:my_weather/presentation/bloc/home_page_bloc/home_page_bloc.dart';
 
-class LocationSettingDialog {
+class LocationSettingDialog with WidgetsBindingObserver {
   final HomePageBloc homePageBloc;
   LocationSettingDialog({required this.homePageBloc});
   void show(BuildContext context) {
@@ -44,8 +44,14 @@ class LocationSettingDialog {
               child: const Text('Cancel')),
           ElevatedButton(
               onPressed: () {
-                LocationSetting(homePageBloc: homePageBloc).goToSettings();
-                Navigator.pop(context);
+                LocationSetting locationSetting =
+                    LocationSetting(homePageBloc: homePageBloc);
+                locationSetting.goToSettings();
+                locationSetting.onInitCalled.listen((event) {
+                  if (event) {
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  }
+                });
               },
               child: const Text("Open App Settings"))
         ],
