@@ -17,28 +17,28 @@ class WeatherAnimationWidgetState extends State<WeatherAnimationWidget>
 
   @override
   void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(seconds: widget.duration),
     );
 
     _animationController.forward();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     _animationController.addListener(() {
-      if (_animationController.value > .2) {
+      if (_animationController.value > .1) {
         visible.value = true;
       }
-      if (_animationController.value > .8) {
+      if (_animationController.value > .9) {
         visible.value = false;
       }
     });
     Animation<Offset> temo = Tween<Offset>(
-      begin: const Offset(-1.0, 0.0),
-      end: const Offset(2.5, 0.0),
+      begin: const Offset(-.40, 0.0),
+      end: const Offset(.75, 0.0),
     ).animate(_animationController)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
@@ -54,7 +54,6 @@ class WeatherAnimationWidgetState extends State<WeatherAnimationWidget>
             duration: const Duration(seconds: 1),
             child: Image.asset(
               widget.imagePath,
-              width: 150,
             ),
           ),
         ));

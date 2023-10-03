@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
 import 'package:my_weather/model/current_model.dart';
+import 'package:my_weather/model/location_model.dart';
 import 'package:my_weather/model/model_list_today_hourly_forecast.dart';
 
 part 'home_page_event.dart';
@@ -56,7 +57,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         emit(HomePageLoadedState(
             loaction: 'loaction',
             currentWeather: CurrentWeather.fromJson(data['current']),
-            todaysList: HourlyList.addFromJson(data)));
+            todaysList: HourlyList.addFromJson(data),currentLocationData: LocationModel.fromJson(data['location'])));
       } else {
         emit(HomePageErroeState());
       }

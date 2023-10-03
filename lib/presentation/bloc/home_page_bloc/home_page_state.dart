@@ -9,16 +9,14 @@ final class HomePageLoadedState extends HomePageState {
   final String loaction;
   final CurrentWeather currentWeather;
   final HourlyList todaysList;
+  final LocationModel currentLocationData;
 
   HomePageLoadedState(
       {required this.loaction,
       required this.currentWeather,
-      required this.todaysList});
+      required this.todaysList,required this.currentLocationData});
 }
 
-final class HomePageErroeState extends HomePageState{
+final class HomePageErroeState extends HomePageState {}
 
-}
-final class HomePermissionDeniedState extends HomePageState{
-
-}
+final class HomePermissionDeniedState extends HomePageState {}
