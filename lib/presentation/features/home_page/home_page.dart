@@ -39,12 +39,17 @@ class _HomePageState extends State<HomePage> {
           extendBodyBehindAppBar: true,
           body: CustomScrollView(
             slivers: [
-              state is HomePageLoadedState?
-              HomePageAppBar(state: state):const CircularProgressIndicator(),
+              state is HomePageLoadedState
+                  ? HomePageAppBar(state: state)
+                  : SliverAppBar(
+                      expandedHeight: MediaQuery.of(context).size.height * 0.7,
+                      floating: false,
+                      flexibleSpace:
+                          const Center(child: CircularProgressIndicator())),
               state is HomePageLoadedState
                   ? HomePageBody(state: state)
-                  : const Scaffold(
-                      body: Center(
+                  : const SliverToBoxAdapter(
+                      child: Center(
                         child: Text('data'),
                       ),
                     ),
