@@ -30,7 +30,6 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       }
 
       permission = await Geolocator.checkPermission();
-      print(permission);
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
@@ -47,7 +46,6 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
 
     final temp = await determinePosition();
-    print(temp);
     if (temp != null) {
       final resp = await get(Uri.parse(
           'http://api.weatherapi.com/v1/forecast.json?key=7b3b3e1274fb4d4395c52221232209&q=${temp.latitude},${temp.longitude}&days=5'));

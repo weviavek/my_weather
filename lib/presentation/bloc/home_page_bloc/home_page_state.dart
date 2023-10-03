@@ -14,7 +14,8 @@ final class HomePageLoadedState extends HomePageState {
   HomePageLoadedState(
       {required this.loaction,
       required this.currentWeather,
-      required this.todaysList,required this.currentLocationData});
+      required this.todaysList,
+      required this.currentLocationData});
 }
 
 final class HomePageErroeState extends HomePageState {}
