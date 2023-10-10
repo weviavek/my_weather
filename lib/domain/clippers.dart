@@ -23,14 +23,10 @@ class CurveClipper extends CustomClipper<Path> {
 class GraphClipper extends CustomClipper<Path> {
   final double currentTemp;
   final double? nextTemp;
-  final bool isFirst;
-  final bool isLast;
 
   GraphClipper(
       {required this.currentTemp,
-      required this.nextTemp,
-      required this.isFirst,
-      required this.isLast});
+      required this.nextTemp,});
   @override
   Path getClip(Size size) {
     Path path = Path();

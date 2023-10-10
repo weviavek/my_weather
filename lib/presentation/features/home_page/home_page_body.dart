@@ -42,12 +42,6 @@ class HomePageBody extends StatelessWidget {
                                           1
                                   ? null
                                   : state.todaysList.temperatureList[index + 1];
-                              bool isFirst = index == 0 ? true : false;
-                              bool isLast = index ==
-                                      state.todaysList.temperatureList.length -
-                                          1
-                                  ? true
-                                  : false;
 
                               String sufix = index < 12 ? 'AM' : 'PM';
                               String current = index % 12 != 0
@@ -61,10 +55,9 @@ class HomePageBody extends StatelessWidget {
                                     alignment: Alignment.topCenter,
                                     children: [
                                       GraphContainer(
+                                        index: index,
                                           currentTemp: currentTemp,
-                                          nextTemp: nextTemp,
-                                          isFirst: isFirst,
-                                          isLast: isLast),
+                                          nextTemp: nextTemp),
                                       Padding(
                                         padding: EdgeInsets.only(
                                             top: 90 -

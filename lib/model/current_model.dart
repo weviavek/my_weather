@@ -5,6 +5,7 @@ class CurrentWeather {
   final int feelsLikeC;
   final int feelsLikeF;
   final WindData windData;
+  final String condition;
 
   CurrentWeather(
       {required this.tempC,
@@ -12,17 +13,21 @@ class CurrentWeather {
       required this.climateImage,
       required this.feelsLikeC,
       required this.feelsLikeF,
-      required this.windData});
+      required this.windData,
+      required this.condition});
 
-  factory CurrentWeather.fromJson(Map<dynamic,dynamic>json){
-        return CurrentWeather(tempC:json['temp_c'].round(),
-        tempF:json['temp_f'].round(),
-        climateImage:'',
-        feelsLikeC:json['feelslike_c'].round(),
-        feelsLikeF:json['feelslike_f'].round(),
-        windData:WindData(windDirection: json['wind_dir'], windSpeed: '${json['wind_kph']} kph')
-      );
-      }
+  factory CurrentWeather.fromJson(Map<dynamic, dynamic> json) {
+    return CurrentWeather(
+        tempC: json['temp_c'].round(),
+        tempF: json['temp_f'].round(),
+        climateImage: '',
+        feelsLikeC: json['feelslike_c'].round(),
+        feelsLikeF: json['feelslike_f'].round(),
+        windData: WindData(
+            windDirection: json['wind_dir'],
+            windSpeed: '${json['wind_kph']} kph'),
+        condition: json['condition']['text']);
+  }
 }
 
 class WindData {

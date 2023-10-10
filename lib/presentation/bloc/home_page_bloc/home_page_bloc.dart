@@ -55,7 +55,8 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         emit(HomePageLoadedState(
             loaction: 'loaction',
             currentWeather: CurrentWeather.fromJson(data['current']),
-            todaysList: HourlyList.addFromJson(data),currentLocationData: LocationModel.fromJson(data['location'])));
+            todaysList: HourlyList.addFromJson(data),
+            currentLocationData: LocationModel.fromJson(data['location'])));
       } else {
         emit(HomePageErroeState());
       }

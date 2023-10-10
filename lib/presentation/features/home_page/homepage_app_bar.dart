@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:my_weather/domain/constants/assets.dart';
+import 'package:my_weather/domain/constants/image_constants.dart';
 import 'package:my_weather/presentation/bloc/home_page_bloc/home_page_bloc.dart';
 
-import '../../../domain/constants/clippers.dart';
+import '../../../domain/clippers.dart';
 import '../../../widgets/weather_animation_widget.dart';
 
 class HomePageAppBar extends StatelessWidget {
   final HomePageLoadedState state;
-  const HomePageAppBar({super.key,required this.state});
+  const HomePageAppBar({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +18,22 @@ class HomePageAppBar extends StatelessWidget {
       flexibleSpace: Stack(
         fit: StackFit.expand,
         children: [
+           Container(
+            padding: const EdgeInsets.only(bottom: 1),
+            decoration: BoxDecoration(
+                border: Border.all(
+                    width: 0, color: Colors.white, style: BorderStyle.none)),
+            child: Image.asset(Assets.getDefaultBackgroud(),
+              fit: BoxFit.cover,
+            ),
+          ),
           Container(
             padding: const EdgeInsets.only(bottom: 1),
             decoration: BoxDecoration(
                 border: Border.all(
                     width: 0, color: Colors.white, style: BorderStyle.none)),
-            child: Image.asset(
-              "assets/images/sunny_day.png",
+            child: Image.network(
+              BackgroudImageHelper.getImage(state.currentWeather.condition),
               fit: BoxFit.cover,
             ),
           ),
@@ -51,14 +62,12 @@ class HomePageAppBar extends StatelessWidget {
             left: 0,
             child: Column(
               children: [
-                SafeArea(
-                  child: Text(
-                    state.currentLocationData.currentLocation,
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
+                Text(
+                  state.currentLocationData.currentLocation,
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 Row(
                   children: [
@@ -89,8 +98,10 @@ class HomePageAppBar extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * .6,
                       height: 200,
-                      child: const WeatherAnimationWidget(
-                          duration: 10, imagePath: 'assets/cloud.png'),
+                      child: WeatherAnimationWidget(
+                          duration: 10,
+                          imagePath: AnimationImageHelper.getImage(
+                              state.currentWeather.condition)),
                     )
                   ],
                 ),
