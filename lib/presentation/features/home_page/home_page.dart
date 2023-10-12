@@ -47,7 +47,10 @@ class _HomePageState extends State<HomePage> {
                       flexibleSpace:
                           const Center(child: CircularProgressIndicator())),
               state is HomePageLoadedState
-                  ? HomePageBody(state: state)
+                  ? HomePageBody(
+                      state: state,
+                      homePageBloc: homePageBloc,
+                    )
                   : const SliverToBoxAdapter(
                       child: Center(
                         child: Text('data'),

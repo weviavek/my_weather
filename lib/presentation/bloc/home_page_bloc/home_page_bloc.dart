@@ -20,10 +20,10 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   FutureOr<void> _initailEvent(
       InitHomeEvent event, Emitter<HomePageState> emit) async {
     Future<Position?> determinePosition() async {
+      emit(HomePageInitialState());
       bool serviceEnabled;
       LocationPermission permission;
 
-      // Test if location services are enabled.
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         return Future.error('Location services are disabled.');

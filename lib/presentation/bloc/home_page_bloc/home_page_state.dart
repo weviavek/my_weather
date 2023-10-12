@@ -10,6 +10,7 @@ final class HomePageLoadedState extends HomePageState {
   final CurrentWeather currentWeather;
   final HourlyList todaysList;
   final LocationModel currentLocationData;
+  final DateTime lastUpdatedTime = DateTime.now();
 
   HomePageLoadedState(
       {required this.loaction,

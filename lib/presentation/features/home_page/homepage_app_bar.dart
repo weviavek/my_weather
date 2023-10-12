@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:my_weather/domain/constants/assets.dart';
 import 'package:my_weather/domain/constants/image_constants.dart';
 import 'package:my_weather/presentation/bloc/home_page_bloc/home_page_bloc.dart';
+import 'package:my_weather/widgets/temperature_widget.dart';
+import 'package:my_weather/widgets/top_curved_container.dart';
 
-import '../../../domain/clippers.dart';
 import '../../../widgets/weather_animation_widget.dart';
 
 class HomePageAppBar extends StatelessWidget {
@@ -18,43 +19,23 @@ class HomePageAppBar extends StatelessWidget {
       flexibleSpace: Stack(
         fit: StackFit.expand,
         children: [
-           Container(
+          Container(
             padding: const EdgeInsets.only(bottom: 1),
-            decoration: BoxDecoration(
-                border: Border.all(
-                    width: 0, color: Colors.white, style: BorderStyle.none)),
-            child: Image.asset(Assets.getDefaultBackgroud(),
+            child: Image.asset(
+              Assets.getDefaultBackgroud(),
               fit: BoxFit.cover,
             ),
           ),
           Container(
             padding: const EdgeInsets.only(bottom: 1),
-            decoration: BoxDecoration(
-                border: Border.all(
-                    width: 0, color: Colors.white, style: BorderStyle.none)),
             child: Image.network(
               BackgroudImageHelper.getImage(state.currentWeather.condition),
               fit: BoxFit.cover,
             ),
           ),
-          Align(
+          const Align(
             alignment: Alignment.bottomCenter,
-            child: ClipPath(
-                clipper: CurveClipper(),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(
-                        color: Colors.white, width: 0, style: BorderStyle.none),
-                  ),
-                  height: 50,
-                  child: const Center(
-                    child: Icon(
-                      Icons.minimize_rounded,
-                      color: Colors.grey,
-                    ),
-                  ),
-                )),
+            child: TopCurvedContainer()
           ),
           Positioned(
             top: 40,
@@ -72,29 +53,11 @@ class HomePageAppBar extends StatelessWidget {
                 Row(
                   children: [
                     SizedBox(
-                      height: MediaQuery.sizeOf(context).width * .6,
-                      width: MediaQuery.sizeOf(context).width * .35,
-                      child: Center(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${state.currentWeather.tempC}\u00B0C',
-                            style: const TextStyle(
-                                fontSize: 50,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                          Text(
-                            "Feels Like ${state.currentWeather.feelsLikeC}\u00B0C",
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          )
-                        ],
-                      )),
-                    ),
+                        height: MediaQuery.sizeOf(context).width * .6,
+                        width: MediaQuery.sizeOf(context).width * .35,
+                        child: TemperatureWidget(
+                            tempC: state.currentWeather.tempC,
+                            feelsLikeC: state.currentWeather.feelsLikeC)),
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * .6,
                       height: 200,

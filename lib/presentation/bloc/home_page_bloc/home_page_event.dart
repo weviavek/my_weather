@@ -4,6 +4,9 @@ part of 'home_page_bloc.dart';
 sealed class HomePageEvent {}
 
 final class InitHomeEvent extends HomePageEvent {
+  InitHomeEvent() {
+    debugPrint('initCalled');
+  }
 }
 
 final class LoadedHomePageEvent extends HomePageEvent {}
