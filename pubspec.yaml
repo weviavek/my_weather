@@ -41,6 +41,7 @@ dependencies:
   lottie: ^2.6.0
   permission_handler: ^11.0.0
   firebase_core: ^2.17.0
+  geocoding: ^2.1.1
 
 dev_dependencies:
   flutter_test:

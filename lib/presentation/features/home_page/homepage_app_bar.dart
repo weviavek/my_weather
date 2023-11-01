@@ -44,7 +44,7 @@ class HomePageAppBar extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  state.currentLocationData.currentLocation,
+                  state.currentLocationData.currentLocation[0],
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
